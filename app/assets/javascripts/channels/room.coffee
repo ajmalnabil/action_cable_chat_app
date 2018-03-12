@@ -6,10 +6,12 @@ App.room = App.cable.subscriptions.create "RoomChannel",
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
-    unless data.message.blank?
+    if (data.mention)
+      alert("You have a new mention!") 
+    if (data.message && !data.message.blank?)
       $('#messages-table').append data.message
       scroll_bottom()
-    # Called when there's incoming data on the websocket for this channel
+
 $(document).on 'turbolinks:load', ->
   submit_message()
   scroll_bottom()
